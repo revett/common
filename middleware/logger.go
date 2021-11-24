@@ -3,6 +3,7 @@ package middleware
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"time"
 
 	"github.com/labstack/echo/v4"
@@ -34,8 +35,12 @@ func (z zerologWriter) Write(b []byte) (int, error) {
 	}
 
 	e := z.logger.Info()
+	if f.Error != "" || f.Status >= http.StatusBadRequest {
+		e = z.logger.Error()
+	}
+
 	if f.Error != "" {
-		e = z.logger.Error().Str("error", f.Error)
+		e.Str("error", f.Error)
 	}
 
 	if f.ID != "" {
