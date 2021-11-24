@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"encoding/json"
+	"fmt"
 	"time"
 
 	"github.com/labstack/echo/v4"
@@ -53,7 +54,9 @@ func (z zerologWriter) Write(b []byte) (int, error) {
 		Int("bytes_in", f.BytesIn).
 		Int("bytes_out", f.BytesOut)
 
-	e.Send()
+	m := fmt.Sprintf("%s %s %d", f.Method, f.URI, f.Status)
+	e.Msg(m)
+
 	return len(b), nil
 }
 
