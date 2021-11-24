@@ -1,2 +1,3 @@
 # common
-Shared common logic for Go projects
+
+Shared common logic for Go projects.
