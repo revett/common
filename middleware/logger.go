@@ -32,22 +32,28 @@ func (z zerologWriter) Write(b []byte) (int, error) {
 		return 0, err
 	}
 
-	z.logger.Info().
-		Time("time", f.Time).
-		Str("id", f.ID).
+	e := z.logger.Info()
+	if f.Error != "" {
+		e = z.logger.Error().Str("error", f.Error)
+	}
+
+	if f.ID != "" {
+		e.Str("id", f.ID)
+	}
+
+	e.Time("time", f.Time).
 		Str("remote_ip", f.RemoteIP).
 		Str("host", f.Host).
 		Str("method", f.Method).
 		Str("uri", f.URI).
 		Str("user_agent", f.UserAgent).
 		Int("status", f.Status).
-		Str("error", f.Error).
 		Int("latency", f.Latency).
 		Str("latency_human", f.LatencyHuman).
 		Int("bytes_in", f.BytesIn).
-		Int("bytes_out", f.BytesOut).
-		Send()
+		Int("bytes_out", f.BytesOut)
 
+	e.Send()
 	return len(b), nil
 }
 
