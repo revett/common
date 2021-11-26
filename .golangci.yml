@@ -8,6 +8,7 @@ linters:
     - interfacer
     - maligned
     - nlreturn
+    - paralleltest
     - scopelint
     - wsl
   enable-all: true
@@ -17,6 +18,7 @@ linters-settings:
       - .Blob(
       - .HTML(
       - .NewHTTPError(
+      - .String(
 run:
   concurrency: 4
   timeout: 30s
