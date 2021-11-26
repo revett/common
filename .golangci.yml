@@ -1,0 +1,22 @@
+issues:
+  exclude-use-default: false
+linters:
+  disable:
+    - exhaustivestruct
+    - goerr113
+    - golint
+    - interfacer
+    - maligned
+    - nlreturn
+    - scopelint
+    - wsl
+  enable-all: true
+linters-settings:
+  wrapcheck:
+    ignoreSigs:
+      - .Blob(
+      - .HTML(
+      - .NewHTTPError(
+run:
+  concurrency: 4
+  timeout: 30s
