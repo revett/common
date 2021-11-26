@@ -6,4 +6,4 @@
 [![Codecov](https://img.shields.io/codecov/c/github/revett/common.svg?style=flat-square)](https://codecov.io/gh/revett/common)
 [![License](https://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://github.com/revett/common/blob/main/LICENSE)
 
-Shared common logic for Go projects.
+Shared common code for my Go projects.
