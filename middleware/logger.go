@@ -11,9 +11,8 @@ import (
 	"github.com/rs/zerolog"
 )
 
-// LoggerUsingZerolog is an labstack/echo middlewware which takes the fields
-// from the normal log output and instead outputs them using a rs/zerolog
-// logger.
+// LoggerUsingZerolog is a labstack/echo middlewware which takes the fields from
+// the normal log output and instead outputs them using a rs/zerolog logger.
 func LoggerUsingZerolog(l zerolog.Logger) echo.MiddlewareFunc {
 	c := middleware.DefaultLoggerConfig
 	c.Output = zerologWriter{
@@ -27,27 +26,26 @@ type zerologWriter struct {
 }
 
 // Write implements the io.Writer interface.
-func (z zerologWriter) Write(b []byte) (int, error) {
+func (z zerologWriter) Write(b []byte) (int, error) { // nolint:varnamelen
 	var f fields
-	err := json.Unmarshal(b, &f)
-	if err != nil {
-		return 0, err
+	if err := json.Unmarshal(b, &f); err != nil {
+		return 0, fmt.Errorf("failed to unmarshal json log data: %w", err) // nolint:wrapcheck
 	}
 
-	e := z.logger.Info()
+	event := z.logger.Info()
 	if f.Error != "" || f.Status >= http.StatusBadRequest {
-		e = z.logger.Error()
+		event = z.logger.Error()
 	}
 
 	if f.Error != "" {
-		e.Str("error", f.Error)
+		event.Str("error", f.Error)
 	}
 
 	if f.ID != "" {
-		e.Str("id", f.ID)
+		event.Str("id", f.ID)
 	}
 
-	e.Time("time", f.Time).
+	event.Time("time", f.Time).
 		Str("remote_ip", f.RemoteIP).
 		Str("host", f.Host).
 		Str("method", f.Method).
@@ -60,7 +58,7 @@ func (z zerologWriter) Write(b []byte) (int, error) {
 		Int("bytes_out", f.BytesOut)
 
 	m := fmt.Sprintf("%s %s %d", f.Method, f.URI, f.Status)
-	e.Msg(m)
+	event.Msg(m)
 
 	return len(b), nil
 }
@@ -68,15 +66,15 @@ func (z zerologWriter) Write(b []byte) (int, error) {
 type fields struct {
 	Time         time.Time `json:"time"`
 	ID           string    `json:"id"`
-	RemoteIP     string    `json:"remote_ip"`
+	RemoteIP     string    `json:"remote_ip"` // nolint:tagliatelle
 	Host         string    `json:"host"`
 	Method       string    `json:"method"`
 	URI          string    `json:"uri"`
-	UserAgent    string    `json:"user_agent"`
+	UserAgent    string    `json:"user_agent"` // nolint:tagliatelle
 	Status       int       `json:"status"`
 	Error        string    `json:"error"`
 	Latency      int       `json:"latency"`
-	LatencyHuman string    `json:"latency_human"`
-	BytesIn      int       `json:"bytes_in"`
-	BytesOut     int       `json:"bytes_out"`
+	LatencyHuman string    `json:"latency_human"` // nolint:tagliatelle
+	BytesIn      int       `json:"bytes_in"`      // nolint:tagliatelle
+	BytesOut     int       `json:"bytes_out"`     // nolint:tagliatelle
 }
