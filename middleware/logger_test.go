@@ -49,7 +49,7 @@ func TestLoggerUsingZerolog(t *testing.T) { // nolint:funlen
 		},
 	}
 
-	for n, testCase := range tests {
+	for n, testCase := range tests { // nolint:paralleltest
 		tc := testCase // nolint:varnamelen
 
 		t.Run(n, func(t *testing.T) {
@@ -67,7 +67,7 @@ func TestLoggerUsingZerolog(t *testing.T) { // nolint:funlen
 
 			handler := loggerMiddleware(
 				func(c echo.Context) error {
-					return c.String(tc.status, "test")
+					return c.String(tc.status, "test") // nolint:wrapcheck
 				},
 			)
 
