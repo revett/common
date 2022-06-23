@@ -27,9 +27,9 @@ type zerologWriter struct {
 
 // Write implements the io.Writer interface.
 func (z zerologWriter) Write(b []byte) (int, error) { // nolint:varnamelen
-	var f fields
+	var f fields // nolint:varnamelen
 	if err := json.Unmarshal(b, &f); err != nil {
-		return 0, fmt.Errorf("failed to unmarshal json log data: %w", err) // nolint:wrapcheck
+		return 0, fmt.Errorf("failed to unmarshal json log data: %w", err)
 	}
 
 	event := z.logger.Info()
