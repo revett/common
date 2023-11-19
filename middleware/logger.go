@@ -26,8 +26,8 @@ type zerologWriter struct {
 }
 
 // Write implements the io.Writer interface.
-func (z zerologWriter) Write(b []byte) (int, error) { // nolint:varnamelen
-	var f fields // nolint:varnamelen
+func (z zerologWriter) Write(b []byte) (int, error) { //nolint:varnamelen
+	var f fields //nolint:varnamelen
 	if err := json.Unmarshal(b, &f); err != nil {
 		return 0, fmt.Errorf("failed to unmarshal json log data: %w", err)
 	}
@@ -66,15 +66,15 @@ func (z zerologWriter) Write(b []byte) (int, error) { // nolint:varnamelen
 type fields struct {
 	Time         time.Time `json:"time"`
 	ID           string    `json:"id"`
-	RemoteIP     string    `json:"remote_ip"` // nolint:tagliatelle
+	RemoteIP     string    `json:"remote_ip"` //nolint:tagliatelle
 	Host         string    `json:"host"`
 	Method       string    `json:"method"`
 	URI          string    `json:"uri"`
-	UserAgent    string    `json:"user_agent"` // nolint:tagliatelle
+	UserAgent    string    `json:"user_agent"` //nolint:tagliatelle
 	Status       int       `json:"status"`
 	Error        string    `json:"error"`
 	Latency      int       `json:"latency"`
-	LatencyHuman string    `json:"latency_human"` // nolint:tagliatelle
-	BytesIn      int       `json:"bytes_in"`      // nolint:tagliatelle
-	BytesOut     int       `json:"bytes_out"`     // nolint:tagliatelle
+	LatencyHuman string    `json:"latency_human"` //nolint:tagliatelle
+	BytesIn      int       `json:"bytes_in"`      //nolint:tagliatelle
+	BytesOut     int       `json:"bytes_out"`     //nolint:tagliatelle
 }
