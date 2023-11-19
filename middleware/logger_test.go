@@ -12,7 +12,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestLoggerUsingZerolog(t *testing.T) { // nolint:funlen
+func TestLoggerUsingZerolog(t *testing.T) { //nolint:funlen
 	t.Parallel()
 
 	tests := map[string]struct {
@@ -49,8 +49,8 @@ func TestLoggerUsingZerolog(t *testing.T) { // nolint:funlen
 		},
 	}
 
-	for n, testCase := range tests { // nolint:paralleltest
-		tc := testCase // nolint:varnamelen
+	for n, testCase := range tests {
+		tc := testCase
 
 		t.Run(n, func(t *testing.T) {
 			t.Parallel()
@@ -67,7 +67,7 @@ func TestLoggerUsingZerolog(t *testing.T) { // nolint:funlen
 
 			handler := loggerMiddleware(
 				func(c echo.Context) error {
-					return c.String(tc.status, "test") // nolint:wrapcheck
+					return c.String(tc.status, "test") //nolint:wrapcheck
 				},
 			)
 
