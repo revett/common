@@ -9,6 +9,8 @@ Shared common code for my Go projects.
 
 ## `log`
 
+Create a custom [rs/zerolog](https://github.com/rs/zerolog) console logger:
+
 ```go
 package main
 
@@ -26,4 +28,12 @@ func main() {
 	// log.Info().Msg("...")
 	// log.Fatal().Err(err).Send()
 }
+```
+
+## `.golangci.yml`
+
+Update the [golangci/golangci-lint](https://github.com/golangci/golangci-lint) within a repo:
+
+```
+curl -o .golangci.yml https://raw.githubusercontent.com/revett/dotfiles/main/.golangci.yml
 ```
